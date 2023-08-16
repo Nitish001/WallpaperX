@@ -9,27 +9,26 @@ import 'package:wallpaper/widget/widget.dart';
 class SearchView extends StatefulWidget {
   final String search;
 
-  SearchView({@required this.search});
+  SearchView({required this.search});
 
   @override
   _SearchViewState createState() => _SearchViewState();
 }
 
 class _SearchViewState extends State<SearchView> {
-  List<PhotosModel> photos = new List();
+  List<PhotosModel> photos = <PhotosModel>[];
   TextEditingController searchController = new TextEditingController();
 
   getSearchWallpaper(String searchQuery) async {
     await http.get(
-        "https://api.pexels.com/v1/search?query=$searchQuery&per_page=30&page=1",
+        Uri.parse("https://api.pexels.com/v1/search?query=$searchQuery&per_page=30&page=1"),
         headers: {"Authorization": apiKEY}).then((value) {
       //print(value.body);
 
       Map<String, dynamic> jsonData = jsonDecode(value.body);
       jsonData["photos"].forEach((element) {
         //print(element);
-        PhotosModel photosModel = new PhotosModel();
-        photosModel = PhotosModel.fromMap(element);
+        PhotosModel photosModel = PhotosModel.fromMap(element);
         photos.add(photosModel);
         //print(photosModel.toString()+ "  "+ photosModel.src.portrait);
       });

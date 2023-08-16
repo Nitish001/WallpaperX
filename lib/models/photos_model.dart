@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class PhotosModel {
   String url;
   String photographer;
@@ -5,12 +7,13 @@ class PhotosModel {
   int photographerId;
   SrcModel src;
 
+
   PhotosModel(
-      {this.url,
-      this.photographer,
-      this.photographerId,
-      this.photographerUrl,
-      this.src});
+      {required this.url,
+      required this.photographer,
+      required this.photographerId,
+      required this.photographerUrl,
+      required this.src});
 
   factory PhotosModel.fromMap(Map<String, dynamic> parsedJson) {
     return PhotosModel(
@@ -28,7 +31,7 @@ class SrcModel {
   String landscape;
   String medium;
 
-  SrcModel({this.portrait, this.landscape, this.large, this.medium});
+  SrcModel({required this.portrait, required this.landscape, required this.large, required this.medium});
 
   factory SrcModel.fromMap(Map<String, dynamic> srcJson) {
     return SrcModel(

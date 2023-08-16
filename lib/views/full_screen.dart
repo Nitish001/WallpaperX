@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ImageView extends StatefulWidget {
   final String imgPath;
 
-  ImageView({@required this.imgPath});
+  ImageView({required this.imgPath});
 
   @override
   _ImageViewState createState() => _ImageViewState();

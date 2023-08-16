@@ -56,7 +56,7 @@ Widget brandName() {
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
       Text(
-        "Wallpaper",
+        "WallpaperX",
         style: TextStyle(color: Colors.black87, fontFamily: 'Overpass'),
       ),
       Text(

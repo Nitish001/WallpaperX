@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,7 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ImageView extends StatefulWidget {
   final String imgPath;
 
-  ImageView({@required this.imgPath});
+  ImageView({required this.imgPath});
 
   @override
   _ImageViewState createState() => _ImageViewState();
@@ -60,13 +61,25 @@ class _ImageViewState extends State<ImageView> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 InkWell(
-                    onTap: () {
+                    onTap: () async {
                       if (kIsWeb) {
                         _launchURL(widget.imgPath);
                         //js.context.callMethod('downloadUrl',[widget.imgPath]);
                         //response = await dio.download(widget.imgPath, "./xx.html");
                       } else {
-                        _save();
+                          final path = _save();
+                          final int location = WallpaperManager.HOME_SCREEN;
+                          print("path");
+                          print(path);
+                          bool result = await WallpaperManager.setWallpaperFromFile(path, location); //provide image path
+
+
+                          if (result == true) {
+                            print("Wallpaper set successfully!");
+                          } else {
+                            print("Error setting wallpaper");
+                          }
+
                       }
                       //Navigator.pop(context);
                     },
@@ -151,18 +164,29 @@ class _ImageViewState extends State<ImageView> {
         options: Options(responseType: ResponseType.bytes));
     final result =
         await ImageGallerySaver.saveImage(Uint8List.fromList(response.data));
+    print("Result");
     print(result);
     Navigator.pop(context);
+    return result["filePath"];
   }
 
   _askPermission() async {
-    if (Platform.isIOS) {
-      /*Map<PermissionGroup, PermissionStatus> permissions =
-          */await PermissionHandler()
-              .requestPermissions([PermissionGroup.photos]);
+    // Check if permission is already granted
+    PermissionStatus status = await Permission.storage.status;
+
+    if (status.isGranted) {
+      // Permission is already granted
+      // You can access the storage here
     } else {
-     /* PermissionStatus permission = */await PermissionHandler()
-          .checkPermissionStatus(PermissionGroup.storage);
+      // Request permission
+      PermissionStatus requestResult = await Permission.storage.request();
+
+      if (requestResult.isGranted) {
+        // Permission granted, you can now access the storage
+      } else {
+        // Permission denied, handle accordingly
+      }
     }
+
   }
 }

@@ -17,22 +17,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<CategorieModel> categories = new List();
+  List<CategorieModel> categories = <CategorieModel>[];
 
   int noOfImageToLoad = 30;
-  List<PhotosModel> photos = new List();
+  List<PhotosModel> photos = <PhotosModel>[];
 
   getTrendingWallpaper() async {
     await http.get(
-        "https://api.pexels.com/v1/curated?per_page=$noOfImageToLoad&page=1",
+        Uri.parse("https://api.pexels.com/v1/curated?per_page=$noOfImageToLoad&page=1"),
         headers: {"Authorization": apiKEY}).then((value) {
       //print(value.body);
 
       Map<String, dynamic> jsonData = jsonDecode(value.body);
       jsonData["photos"].forEach((element) {
         //print(element);
-        PhotosModel photosModel = new PhotosModel();
-        photosModel = PhotosModel.fromMap(element);
+        PhotosModel photosModel = PhotosModel.fromMap(element);
         photos.add(photosModel);
         //print(photosModel.toString()+ "  "+ photosModel.src.portrait);
       });
@@ -115,31 +114,6 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 16,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Made By ",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 12,
-                        fontFamily: 'Overpass'),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _launchURL("https://www.linkedin.com/in/lamsanskar/");
-                    },
-                    child: Container(
-                        child: Text(
-                      "Sanskar Tiwari",
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 12,
-                          fontFamily: 'Overpass'),
-                    )),
-                  ),
-                ],
-              ),
               SizedBox(
                 height: 16,
               ),
@@ -201,7 +175,7 @@ class _HomeState extends State<Home> {
 class CategoriesTile extends StatelessWidget {
   final String imgUrls, categorie;
 
-  CategoriesTile({@required this.imgUrls, @required this.categorie});
+  CategoriesTile({required this.imgUrls, required this.categorie});
 
   @override
   Widget build(BuildContext context) {
