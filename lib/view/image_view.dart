@@ -67,13 +67,17 @@ class _ImageViewState extends State<ImageView> {
                         //js.context.callMethod('downloadUrl',[widget.imgPath]);
                         //response = await dio.download(widget.imgPath, "./xx.html");
                       } else {
-                          final path = _save();
+                          final path = await _save();
+                          String inputPath = path['filePath'];
+                          String transformedPath = "";
                           final int location = WallpaperManager.HOME_SCREEN;
-                          print("path");
-                          print(path);
-                          bool result = await WallpaperManager.setWallpaperFromFile(path, location); //provide image path
+                          if (inputPath.startsWith("file://")) {
+                            transformedPath = inputPath.substring(7); // Remove "file://"
 
-
+                          } else {
+                            print("The input string doesn't start with file://");
+                          }
+                          bool result = await WallpaperManager.setWallpaperFromFile(transformedPath, location); //provide image path
                           if (result == true) {
                             print("Wallpaper set successfully!");
                           } else {
@@ -167,7 +171,7 @@ class _ImageViewState extends State<ImageView> {
     print("Result");
     print(result);
     Navigator.pop(context);
-    return result["filePath"];
+    return result;
   }
 
   _askPermission() async {
