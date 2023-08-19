@@ -24,7 +24,8 @@ class _HomeState extends State<Home> {
 
   getTrendingWallpaper() async {
     await http.get(
-        Uri.parse("https://api.pexels.com/v1/curated?per_page=$noOfImageToLoad&page=1"),
+        Uri.parse(
+            "https://api.pexels.com/v1/curated?per_page=$noOfImageToLoad&page=1"),
         headers: {"Authorization": apiKEY}).then((value) {
       //print(value.body);
 
@@ -80,37 +81,37 @@ class _HomeState extends State<Home> {
         child: Container(
           child: Column(
             children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xfff5f8fd),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 24),
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: TextField(
-                      controller: searchController,
-                      decoration: InputDecoration(
-                          hintText: "search wallpapers",
-                          border: InputBorder.none),
-                    )),
-                    InkWell(
-                        onTap: () {
-                          if (searchController.text != "") {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SearchView(
-                                          search: searchController.text,
-                                        )));
-                          }
-                        },
-                        child: Container(child: Icon(Icons.search)))
-                  ],
-                ),
-              ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //     color: Color(0xfff5f8fd),
+              //     borderRadius: BorderRadius.circular(30),
+              //   ),
+              //   margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
+              //   padding: EdgeInsets.symmetric(horizontal: 24),
+              //   child: Row(
+              //     children: <Widget>[
+              //       Expanded(
+              //           child: TextField(
+              //         controller: searchController,
+              //         decoration: InputDecoration(
+              //             hintText: "search wallpapers",
+              //             border: InputBorder.none),
+              //       )),
+              //       InkWell(
+              //           onTap: () {
+              //             if (searchController.text != "") {
+              //               Navigator.push(
+              //                   context,
+              //                   MaterialPageRoute(
+              //                       builder: (context) => SearchView(
+              //                             search: searchController.text,
+              //                           )));
+              //             }
+              //           },
+              //           child: Container(child: Icon(Icons.search)))
+              //     ],
+              //   ),
+              // ),
               SizedBox(
                 height: 16,
               ),

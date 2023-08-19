@@ -30,7 +30,7 @@ Widget wallPaper(List<PhotosModel> listPhotos, BuildContext context) {
               tag: photoModel.src.portrait,
               child: Container(
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(24),
                     child: kIsWeb
                         ? Image.network(
                             photoModel.src.portrait,
@@ -57,7 +57,7 @@ Widget brandName() {
     children: <Widget>[
       Text(
         "WallpaperX",
-        style: TextStyle(color: Colors.black87, fontFamily: 'Overpass'),
+        style: TextStyle(color: Colors.white, fontFamily: 'Overpass'),
       ),
       Text(
         "Hub",
